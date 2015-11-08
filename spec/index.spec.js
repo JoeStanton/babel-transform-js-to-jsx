@@ -1,10 +1,9 @@
 import { expect } from "chai";
 
 const transform = (str) => {
-  return require("babel").transform(str, {
-    plugins: [require("..")],
-    blacklist: ["react"],
-  }).code.replace("\"use strict\";\n\n", "")
+  return require("babel-core").transform(str, {
+    plugins: ["..", "syntax-jsx"],
+  }).code
 }
 
 describe('JSX Elements', () => {

@@ -1,12 +1,11 @@
-export default function ({Plugin, types: t}) {
-  return new Plugin('arrow-functions', {
+export default function ({types: t}) {
+  return {
     visitor: {
       FunctionExpression: {
-        exit: function(node) {
-          node.type = "ArrowFunctionExpression";
-          return node;
+        exit: function(path) {
+          path.node.type = "ArrowFunctionExpression";
         }
       }
     }
-  });
+  }
 }
