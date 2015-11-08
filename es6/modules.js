@@ -4,7 +4,6 @@ export default function ({Plugin, types: t}) {
       VariableDeclaration: function(node) {
         const declaration = node.declarations[0];
         if (!(t.isCallExpression(declaration.init) && declaration.init.callee.name === 'require')) {
-          console.log((declaration));
           return node;
         }
         const identifier = declaration.id;
