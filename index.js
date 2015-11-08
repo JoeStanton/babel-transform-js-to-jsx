@@ -42,6 +42,13 @@ export default function ({Plugin, types: t}) {
             }
           });
         }
+      },
+      ConditionalExpression: function(node) {
+        if (node.alternate.operator === 'void') {
+          return t.LogicalExpression("&&", node.test, node.consequent);
+        }
+
+        return node;
       }
     }
   });

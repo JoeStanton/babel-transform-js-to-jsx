@@ -54,3 +54,10 @@ describe('JSX Attributes', () => {
     expect(transform(code)).to.equal('<div {...props} />;');
   })
 });
+
+describe('Expression simplification', () => {
+  it('Should simplify ternary statements with no else', () => {
+    const code = '<div>{condition ? trueBranch : void 8}</div>';
+    expect(transform(code)).to.equal('<div>{condition && trueBranch}</div>;');
+  })
+});

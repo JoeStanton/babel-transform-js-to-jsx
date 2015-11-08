@@ -9,8 +9,8 @@ process.stdin.on("data", function(chunk) { buf += chunk; });
 process.stdin.on("end", function() {
   process.stdout.write(
     require("babel").transform(buf, {
-      plugins: [require(".")],
-      blacklist: ["react"],
+      plugins: [require("."), require('./es6/modules')],
+      blacklist: ["react", "es6.modules"]
     }).code
   );
 });
