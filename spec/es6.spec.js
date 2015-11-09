@@ -40,7 +40,7 @@ describe('Arrow functions', () => {
   });
 
   it('bails out when `this` is used', () => {
-    const code = '(function() { this.a })';
-    expect(transform(code)).to.equal(code);
+    const code = '(function () {  this.a;});';
+    expect(transform(code).replace(/\n/g, '')).to.equal(code);
   })
 });
