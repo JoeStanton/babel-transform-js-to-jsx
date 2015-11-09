@@ -20,10 +20,12 @@ export default function ({types: t}) {
         if (!(t.isCallExpression(path.node.right) && path.node.right.callee.name === 'require')) {
           return;
         }
+
         const identifier = path.node.left;
         const from = path.node.right.arguments[0];
+        path.scope.bindings[identifier.name].path.remove();
 
-        path.replaceWith(
+        path.parentPath.replaceWith(
           t.ImportDeclaration(
             [t.importDefaultSpecifier(identifier)],
             from
@@ -35,7 +37,7 @@ export default function ({types: t}) {
           return;
         }
 
-        path.replaceWith(
+        path.parentPath.replaceWith(
           t.ImportDeclaration(
             [],
             path.node.arguments[0]

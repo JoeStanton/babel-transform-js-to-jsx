@@ -13,7 +13,7 @@ describe('CommonJS -> ES6 imports', () => {
   });
 
   it('converts an assignment', () => {
-    const code = 'React = require("react");';
+    const code = 'var React; React = require("react");';
     expect(transform(code)).to.equal('import React from "react";');
   })
 
