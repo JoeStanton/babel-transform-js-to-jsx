@@ -1,10 +1,9 @@
 import { expect } from "chai";
 
 const transform = (str) => {
-  return require("babel").transform(str, {
-    plugins: [require("../es6/modules"), require("../es6/arrow-functions")],
-    blacklist: ["es6.modules", "es6.arrowFunctions"],
-  }).code.replace("\"use strict\";\n\n", "")
+  return require("babel-core").transform(str, {
+    plugins: ["../es6/modules", "../es6/arrow-functions"]
+  }).code
 }
 
 describe('CommonJS -> ES6 imports', () => {
@@ -41,7 +40,7 @@ describe('Arrow functions', () => {
   });
 
   it('bails out when `this` is used', () => {
-    const code = '(function() { this.a })';
-    expect(transform(code)).to.equal(code);
+    const code = '(function () {  this.a;});';
+    expect(transform(code).replace(/\n/g, '')).to.equal(code);
   })
 });

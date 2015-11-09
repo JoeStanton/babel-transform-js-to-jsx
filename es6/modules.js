@@ -1,41 +1,47 @@
-export default function ({Plugin, types: t}) {
-  return new Plugin('5to6', {
+export default function ({types: t}) {
+  return {
     visitor: {
-      VariableDeclaration: function(node) {
-        const declaration = node.declarations[0];
+      VariableDeclaration: function(path) {
+        const declaration = path.node.declarations[0];
         if (!(t.isCallExpression(declaration.init) && declaration.init.callee.name === 'require')) {
-          return node;
+          return;
         }
         const identifier = declaration.id;
         const from = declaration.init.arguments[0];
 
-        return t.ImportDeclaration(
-          [t.importDefaultSpecifier(identifier)],
-          from
+        path.replaceWith(
+          t.ImportDeclaration(
+            [t.importDefaultSpecifier(identifier)],
+            from
+          )
         );
       },
-      AssignmentExpression: function(node) {
-        if (!(t.isCallExpression(node.right) && node.right.callee.name === 'require')) {
-          return node;
+      AssignmentExpression: function(path) {
+        if (!(t.isCallExpression(path.node.right) && path.node.right.callee.name === 'require')) {
+          return;
         }
-        const identifier = node.left;
-        const from = node.right.arguments[0];
+        const identifier = path.node.left;
+        const from = path.node.right.arguments[0];
 
-        return t.ImportDeclaration(
-          [t.importDefaultSpecifier(identifier)],
-          from
+        path.replaceWith(
+          t.ImportDeclaration(
+            [t.importDefaultSpecifier(identifier)],
+            from
+          )
         );
       },
-      CallExpression: function(node) {
-        if (!(node.callee.name === 'require')) {
-          return node;
+      CallExpression: function(path) {
+        if (!(path.node.callee.name === 'require')) {
+          return;
         }
 
-        return t.ImportDeclaration(
-          [],
-          node.arguments[0]
+        path.replaceWith(
+          t.ImportDeclaration(
+            [],
+            path.node.arguments[0]
+          )
         );
       }
     }
-  });
+  }
 }

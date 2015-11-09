@@ -1,12 +1,19 @@
-export default function ({Plugin, types: t}) {
-  return new Plugin('arrow-functions', {
+export default function ({types: t}) {
+  return {
     visitor: {
       FunctionExpression: {
-        exit: function(node) {
-          node.type = "ArrowFunctionExpression";
-          return node;
+        exit: function (path) {
+          if (!path.getData("hasThis")) {
+            path.node.type = "ArrowFunctionExpression";
+          }
+        }
+      },
+      ThisExpression: function(path) {
+        const func = path.find((path) => (path.isFunction() && !path.isArrowFunctionExpression()) || path.isProgram());
+        if (func) {
+          func.setData("hasThis", true);
         }
       }
     }
-  });
+  }
 }
