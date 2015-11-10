@@ -1,6 +1,6 @@
 {
   "name": "babel-js-to-jsx",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "scripts": {
     "test": "mocha --harmony --compilers js:babel-core/register spec"
   },
@@ -16,5 +16,8 @@
     "chai": "^3.4.0",
     "eslint": "^1.9.0",
     "mocha": "^2.3.3"
+  },
+  "bin": {
+    "js-to-jsx": "./bin/js-to-jsx.js"
   }
 }
