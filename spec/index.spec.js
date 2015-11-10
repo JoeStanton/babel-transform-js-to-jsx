@@ -52,6 +52,11 @@ describe('JSX Attributes', () => {
     const code = 'div(props)';
     expect(transform(code)).to.equal('<div {...props} />;');
   })
+
+  it('With literal key', () => {
+    const code = 'div({"data-uri": "test"})';
+    expect(transform(code)).to.equal('<div data-uri="test" />;');
+  })
 });
 
 describe('Expression simplification', () => {

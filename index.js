@@ -7,8 +7,9 @@ export default function ({types: t}) {
     }
 
     return (props && props.properties || []).map(prop => {
+      const key = t.JSXIdentifier(prop.key.name || prop.key.value)
       const value = t.isLiteral(prop.value) && (typeof prop.value.value === 'string') ? prop.value : t.JSXExpressionContainer(prop.value);
-      return t.JSXAttribute(t.JSXIdentifier(prop.key.name), value);
+      return t.JSXAttribute(key, value);
     });
   }
 
