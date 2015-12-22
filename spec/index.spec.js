@@ -53,6 +53,11 @@ describe('JSX Attributes', () => {
     expect(transform(code)).to.equal('<div {...props} />;');
   })
 
+  it('With object prop with receiver', () => {
+    const code = 'div(this.props)';
+    expect(transform(code)).to.equal('<div {...this.props} />;');
+  })
+
   it('With literal key', () => {
     const code = 'div({"data-uri": "test"})';
     expect(transform(code)).to.equal('<div data-uri="test" />;');

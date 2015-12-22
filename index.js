@@ -2,7 +2,7 @@ let {DOM} = require("react");
 
 export default function ({types: t}) {
   const getAttributes = (props) => {
-    if (t.isIdentifier(props)) {
+    if (t.isIdentifier(props) || t.isMemberExpression(props)) {
       return [t.JSXSpreadAttribute(props)];
     }
 
@@ -27,7 +27,7 @@ export default function ({types: t}) {
     visitor: {
       CallExpression: {
         exit: function (path, state) {
-          if (Object.keys(DOM).concat(state.opts.components).indexOf(path.node.callee.name) === -1) return;
+          if (Object.keys(DOM).concat(state.opts.components || []).indexOf(path.node.callee.name) === -1) return;
 
           var props = getAttributes(path.node.arguments[0]);
           var children = processChildren(path.node.arguments.slice(1));
