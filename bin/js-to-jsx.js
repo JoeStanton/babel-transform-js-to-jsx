@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-require("babel-register");
+require("babel-register")({ only: /babel-js-to-jsx/ });
 var path = require("path");
 var root = path.resolve(__dirname, "..");
 
