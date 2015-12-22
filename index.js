@@ -2,7 +2,7 @@ let {DOM} = require("react");
 
 export default function ({types: t}) {
   const getAttributes = (props) => {
-    if (t.isIdentifier(props)) {
+    if (t.isIdentifier(props) || t.isMemberExpression(props)) {
       return [t.JSXSpreadAttribute(props)];
     }
 
@@ -13,14 +13,24 @@ export default function ({types: t}) {
     });
   }
 
+  const processChildren = (children) => {
+    return children.map(c => {
+      if (t.isJSXElement(c) || t.isStringLiteral(c) || t.isJSXExpressionContainer(c)) {
+        return c;
+      } else {
+        return t.JSXExpressionContainer(c);
+      }
+    });
+  }
+
   return {
     visitor: {
       CallExpression: {
-        exit: function (path) {
-          if (Object.keys(DOM).indexOf(path.node.callee.name) === -1) return;
+        exit: function (path, state) {
+          if (Object.keys(DOM).concat(state.opts.components || []).indexOf(path.node.callee.name) === -1) return;
 
           var props = getAttributes(path.node.arguments[0]);
-          var children = path.node.arguments.slice(1);
+          var children = processChildren(path.node.arguments.slice(1));
 
           var name = t.JSXIdentifier(path.node.callee.name);
 
@@ -30,18 +40,6 @@ export default function ({types: t}) {
 
           var el = t.JSXElement(open, close, children);
           path.replaceWith(path.parent.type === 'ReturnStatement' ? t.ParenthesizedExpression(el) : t.ExpressionStatement(el));
-        }
-      },
-      JSXElement: {
-        exit: function(path) {
-          path.node.children = path.node.children.map(c => {
-            if (t.isJSXElement(c) || t.isStringLiteral(c) || t.isJSXExpressionContainer(c)) {
-              return t.isStringLiteral(c) ? t.JSXText(c.value) : c;
-            } else {
-              return t.JSXExpressionContainer(c);
-            }
-          });
-          path.replaceWith(path.node);
         }
       },
       ConditionalExpression: function(path) {
