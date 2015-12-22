@@ -16,7 +16,7 @@ export default function ({types: t}) {
   return {
     visitor: {
       CallExpression: {
-        enter: function (path) {
+        exit: function (path) {
           if (Object.keys(DOM).indexOf(path.node.callee.name) === -1) return;
 
           var props = getAttributes(path.node.arguments[0]);
