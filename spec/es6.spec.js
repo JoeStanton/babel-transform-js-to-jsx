@@ -15,12 +15,17 @@ describe('CommonJS -> ES6 imports', () => {
   it('converts an assignment', () => {
     const code = 'var React; React = require("react");';
     expect(transform(code)).to.equal('import React from "react";');
-  })
+  });
 
   it('converts a require without assignment', () => {
     const code = 'require("react");';
     expect(transform(code)).to.equal('import "react";');
-  })
+  });
+
+  it('leaves destructuring requires alone', () => {
+    const code = 'require("react").something;';
+    expect(transform(code)).to.equal('require("react").something;');
+  });
 });
 
 describe('Arrow functions', () => {

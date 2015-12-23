@@ -33,7 +33,7 @@ export default function ({types: t}) {
         );
       },
       CallExpression: function(path) {
-        if (!(path.node.callee.name === 'require')) {
+        if (!(path.node.callee.name === 'require') || t.isMemberExpression(path.parentPath)) {
           return;
         }
 
