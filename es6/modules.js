@@ -3,7 +3,7 @@ export default function ({types: t}) {
     visitor: {
       VariableDeclaration: function(path) {
         const declaration = path.node.declarations[0];
-        if (!(t.isCallExpression(declaration.init) && declaration.init.callee.name === 'require')) {
+        if (!(t.isCallExpression(declaration.init) && declaration.init.callee.name === 'require') || !t.isProgram(path.parentPath.node)) {
           return;
         }
         const identifier = declaration.id;
@@ -17,7 +17,7 @@ export default function ({types: t}) {
         );
       },
       AssignmentExpression: function(path) {
-        if (!(t.isCallExpression(path.node.right) && path.node.right.callee.name === 'require')) {
+        if (!(t.isCallExpression(path.node.right) && path.node.right.callee.name === 'require') || !t.isProgram(path.parentPath.parentPath.node)) {
           return;
         }
 
@@ -33,7 +33,7 @@ export default function ({types: t}) {
         );
       },
       CallExpression: function(path) {
-        if (!(path.node.callee.name === 'require') || t.isMemberExpression(path.parentPath)) {
+        if (path.node.callee.name !== 'require' || t.isMemberExpression(path.parentPath.node) || !t.isProgram(path.parentPath.parentPath.node)) {
           return;
         }
 
