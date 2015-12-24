@@ -1,4 +1,6 @@
 let {DOM} = require("react");
+const blacklist = ["map"];
+const whitelist = Object.keys(DOM).filter(item => blacklist.indexOf(item) === -1);
 
 export default function ({types: t}) {
   const getAttributes = (props) => {
@@ -27,7 +29,7 @@ export default function ({types: t}) {
     visitor: {
       CallExpression: {
         exit: function (path, state) {
-          if (Object.keys(DOM).concat(state.opts.components || []).indexOf(path.node.callee.name) === -1) return;
+          if (whitelist.concat(state.opts.components || []).indexOf(path.node.callee.name) === -1) return;
 
           var props = getAttributes(path.node.arguments[0]);
           var children = processChildren(path.node.arguments.slice(1));
