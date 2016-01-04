@@ -16,7 +16,7 @@ process.stdin.on("data", function(chunk) { buf += chunk; });
 process.stdin.on("end", function() {
   process.stdout.write(
     require("babel-core").transform(buf, {
-      plugins: [[root, { components: components }], root + "/es6/arrow-functions", root + "/es6/modules"],
+      plugins: [[root, { components: components }], root + "/es6/arrow-functions", root + "/es6/modules", root + "/es6/unhoist-variables"],
     }).code
   );
 });

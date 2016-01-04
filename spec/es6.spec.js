@@ -1,4 +1,5 @@
 import { expect } from "chai";
+import dedent from "dedent";
 
 const transform = (str) => {
   return require("babel-core").transform(str, {
@@ -41,7 +42,13 @@ describe('Arrow functions', () => {
 
   it('with return', () => {
     const code = '(function(a, b) { return a + b; })';
-    expect(transform(code)).to.equal(`(a, b) => {\n  return a + b;\n};`);
+    expect(transform(code)).to.equal(
+      dedent`
+        (a, b) => {
+          return a + b;
+        };
+      `
+    );
   });
 
   it('bails out when `this` is used', () => {

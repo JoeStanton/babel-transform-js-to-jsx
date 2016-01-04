@@ -37,6 +37,7 @@ require("babel-core").transform(code, {
     "js-to-jsx/es6/modules",
     "js-to-jsx/es6/arrow-functions",
     "js-to-jsx/es6/remove-dom-shim",
+    "js-to-jsx/es6/unhoist-variables",
     "syntax-jsx"
   ]
 }).code
