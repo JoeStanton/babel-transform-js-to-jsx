@@ -13,7 +13,7 @@ describe('JSX Elements', () => {
 
   it('With text child', () => {
     const code = 'div(null, "Hello")';
-    expect(transform(code)).to.equal('<div>"Hello"</div>;');
+    expect(transform(code)).to.equal('<div>Hello</div>;');
   });
 
   it('With element child', () => {
