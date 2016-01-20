@@ -17,8 +17,10 @@ export default function ({types: t}) {
 
   const processChildren = (children) => {
     return children.map(c => {
-      if (t.isJSXElement(c) || t.isStringLiteral(c) || t.isJSXExpressionContainer(c)) {
+      if (t.isJSXElement(c) || t.isJSXExpressionContainer(c)) {
         return c;
+      } else if (t.isStringLiteral(c)) {
+        return t.JSXText(c.value);
       } else {
         return t.JSXExpressionContainer(c);
       }
