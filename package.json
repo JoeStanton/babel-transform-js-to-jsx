@@ -1,5 +1,5 @@
 {
-  "name": "babel-js-to-jsx",
+  "name": "babel-plugin-js-to-jsx",
   "version": "2.0.3",
   "scripts": {
     "test": "mocha --harmony --compilers js:babel-core/register spec"
