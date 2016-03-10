@@ -16,7 +16,7 @@ require("babel-core").transform(code, {
 Or from the command line for composition with other tools:
 
 ```bash
-npm install babel-js-to-jsx
+npm install babel-plugin-js-to-jsx
 cat example.ls | lsc -cb --no-header | js-to-jsx | esformatter -c format.json
 ```
 
