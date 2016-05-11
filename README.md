@@ -9,14 +9,14 @@ It can be used as a plugin:
 
 ```js
 require("babel-core").transform(code, {
-  plugins: ["js-to-jsx", "syntax-jsx"],
+  plugins: ["babel-transform-js-to-jsx", "syntax-jsx"],
 }).code
 ```
 
 Or from the command line for composition with other tools:
 
 ```bash
-npm install babel-plugin-js-to-jsx
+npm install babel-transform-js-to-jsx
 cat example.ls | lsc -cb --no-header | js-to-jsx | esformatter -c format.json
 ```
 
@@ -33,11 +33,11 @@ They can be used like this:
 ```js
 require("babel-core").transform(code, {
   plugins: [
-    "js-to-jsx",
-    "js-to-jsx/es6/modules",
-    "js-to-jsx/es6/arrow-functions",
-    "js-to-jsx/es6/remove-dom-shim",
-    "js-to-jsx/es6/unhoist-variables",
+    "babel-transform-js-to-jsx",
+    "babel-transform-js-to-jsx/es6/modules",
+    "babel-transform-js-to-jsx/es6/arrow-functions",
+    "babel-transform-js-to-jsx/es6/remove-dom-shim",
+    "babel-transform-js-to-jsx/es6/unhoist-variables",
     "syntax-jsx"
   ]
 }).code
