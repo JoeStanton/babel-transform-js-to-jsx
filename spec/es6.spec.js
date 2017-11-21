@@ -27,6 +27,11 @@ describe('CommonJS -> ES6 imports', () => {
     const code = 'require("react").something;';
     expect(transform(code)).to.equal('require("react").something;');
   });
+
+  it('converts destructure sequences', () => {
+    const code = '$ref = require("react"), fn1 = $ref.fn1, fn2 = $ref.fn2;';
+    expect(transform(code)).to.equal('import { fn1, fn2 } from "react";');
+  });
 });
 
 describe('Arrow functions', () => {

@@ -16,6 +16,28 @@ export default function ({types: t}) {
           )
         );
       },
+      SequenceExpression(path) {
+        const assignments = path.node.expressions;
+
+        if (assignments.filter(t.isAssignmentExpression).length !== assignments.length) {
+          return;
+        }
+
+        if (assignments[0].right.callee.name !== "require" && assignments < 2) {
+          return;
+        }
+
+        let module = assignments[0].right.arguments[0];
+        let destructured = assignments.slice(1).map(assignment => assignment.left.name);
+
+        let first = t.ImportDeclaration(
+          [t.importDefaultSpecifier(t.identifier("{ " + destructured.join(", ") + " }"))],
+          module
+        );
+
+        path.parentPath.insertAfter(first);
+        path.remove();
+      },
       AssignmentExpression: function(path) {
         if (!(t.isCallExpression(path.node.right) && path.node.right.callee.name === 'require') || !t.isProgram(path.parentPath.parentPath.node)) {
           return;
