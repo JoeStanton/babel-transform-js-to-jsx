@@ -1,6 +1,8 @@
 JS to JSX
 =========
 
+**I don't support/use this anymore! But I hope you find it useful**.
+
 [![Circle CI](https://circleci.com/gh/JoeStanton/babel-js-to-jsx.svg?style=svg)](https://circleci.com/gh/JoeStanton/babel-js-to-jsx)
 
 Babel 6 plugin to convert from desugared React.DOM CallExpressions -> the equivalent JSX. Currently used to migrate to ES6+ from other compile to JS languages.
