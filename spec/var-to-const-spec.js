@@ -21,9 +21,9 @@ describe('var -> const', () => {
     expect(transform(code)).to.equal(transformed);
   });
 
-  it('does not convert var declarations', () => {
+  it('removes var declarations', () => {
     const code = 'var foo, bar;';
-    expect(transform(code)).to.equal('var foo, bar;');
+    expect(transform(code)).to.equal('');
   });
 });
 
